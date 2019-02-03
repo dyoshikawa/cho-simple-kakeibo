@@ -1,0 +1,32 @@
+{
+  "name": "react-ts-template",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently -r \"npm:type-check:watch\" \"npm:start\"",
+    "start": "parcel ./src/index.html",
+    "build": "yarn type && parcel build ./src/index.html --public-url '/'",
+    "prettify": "prettier --write './src/**/*.{ts,tsx}'",
+    "type": "tsc --noEmit",
+    "type:watch": "tsc --noEmit --watch",
+    "deploy": "yarn build && yarn run firebase deploy"
+  },
+  "dependencies": {
+    "@types/moment": "^2.13.0",
+    "bulma": "^0.7.2",
+    "chart.js": "^2.7.3",
+    "firebase": "^5.8.2",
+    "moment": "^2.24.0",
+    "react": "^16.7.0",
+    "react-chartjs-2": "^2.7.4",
+    "react-dom": "^16.7.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.7.20",
+    "@types/react-dom": "^16.0.11",
+    "firebase-tools": "^6.3.1",
+    "parcel-bundler": "^1.11.0",
+    "prettier": "^1.16.1",
+    "typescript": "^3.2.4"
+  }
+}
