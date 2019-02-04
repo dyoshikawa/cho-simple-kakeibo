@@ -109,6 +109,14 @@ class App extends React.Component<Props, State> {
     if (this.priceInputRef.current) this.priceInputRef.current.value = ''
   }
 
+  onRemoveItemClicked = async (id: string) => {
+    if (!this.state.me) return
+    await firestore()
+      .collection(Collections.items)
+      .doc(id)
+      .delete()
+  }
+
   onPriceChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ price: Number(e.target.value) })
   }
@@ -179,6 +187,12 @@ class App extends React.Component<Props, State> {
                     <div className="card-content">
                       <p className="title">{item.price}円</p>
                       <p className="subtitle">{item.createdAt}</p>
+                      <button
+                        className="button is-danger"
+                        onClick={() => this.onRemoveItemClicked(item.id)}
+                      >
+                        削除
+                      </button>
                     </div>
                   </div>
                 ))}
