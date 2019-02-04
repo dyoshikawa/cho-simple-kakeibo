@@ -103,7 +103,7 @@ class App extends React.Component<Props, State> {
       .add({
         price: this.state.price,
         userUid: this.state.me.uid,
-        createdAt: moment().format('YYYY/MM/DD hh:mm:ss'),
+        createdAt: moment().format('YYYY/MM/DD HH:mm:ss'),
       })
     this.setState({ price: 0 })
     if (this.priceInputRef.current) this.priceInputRef.current.value = ''
