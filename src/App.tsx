@@ -10,6 +10,12 @@ import '@fortawesome/fontawesome-free-brands'
 import Header from './components/Header'
 import AddItem from './components/AddItem'
 import ItemList from './components/ItemList'
+import { Collections } from './utils/defines'
+
+enum Tabs {
+  Items,
+  Budget,
+}
 
 interface Item {
   id: string
@@ -24,10 +30,7 @@ interface State {
   price: number
   me: User | null
   items: Item[]
-}
-
-const Collections = {
-  items: 'items',
+  tab: Tabs
 }
 
 const firebaseInit = () => {
@@ -62,6 +65,7 @@ class App extends React.Component<Props, State> {
       me: null,
       price: 0,
       items: [],
+      tab: Tabs.Items,
     }
   }
 
@@ -108,6 +112,14 @@ class App extends React.Component<Props, State> {
       .delete()
   }
 
+  onItemsTabClicked = () => {
+    this.setState({ tab: Tabs.Items })
+  }
+
+  onBudgetTabClicked = () => {
+    this.setState({ tab: Tabs.Budget })
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -120,6 +132,24 @@ class App extends React.Component<Props, State> {
         {this.state.me && (
           <React.Fragment>
             <AddItem me={this.state.me} />
+            <div className="container">
+              <div className="tabs">
+                <ul>
+                  <li
+                    className={this.state.tab === Tabs.Items ? 'is-active' : ''}
+                  >
+                    <a onClick={this.onItemsTabClicked}>支出一覧</a>
+                  </li>
+                  <li
+                    className={
+                      this.state.tab === Tabs.Budget ? 'is-active' : ''
+                    }
+                  >
+                    <a onClick={this.onBudgetTabClicked}>予算</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <ItemList
               items={this.state.items}
               onRemoveItemClicked={this.onRemoveItemClicked}
