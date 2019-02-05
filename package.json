@@ -12,6 +12,11 @@
     "deploy": "yarn build && yarn run firebase deploy"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free": "^5.7.1",
+    "@fortawesome/fontawesome-free-brands": "^5.0.13",
+    "@fortawesome/fontawesome-free-regular": "^5.0.13",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@types/moment": "^2.13.0",
     "bulma": "^0.7.2",
     "chart.js": "^2.7.3",
