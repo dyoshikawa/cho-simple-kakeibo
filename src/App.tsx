@@ -4,6 +4,10 @@ import 'firebase/firestore'
 import 'firebase/auth'
 import moment from 'moment'
 import 'bulma'
+import '@fortawesome/fontawesome'
+import '@fortawesome/fontawesome-free-solid'
+import '@fortawesome/fontawesome-free-regular'
+import '@fortawesome/fontawesome-free-brands'
 
 interface Item {
   id: string
@@ -140,7 +144,8 @@ class App extends React.Component<Props, State> {
             </h2>
             {this.state.me === null && (
               <button className="button is-info" onClick={this.onLoginClicked}>
-                Googleアカウントでログイン
+                <i className="fa-google fab" />
+                &nbsp; Googleアカウントでログイン
               </button>
             )}
             {this.state.me !== null && (
@@ -191,7 +196,7 @@ class App extends React.Component<Props, State> {
                         className="button is-danger"
                         onClick={() => this.onRemoveItemClicked(item.id)}
                       >
-                        削除
+                        <i className="fa-trash-alt far" />
                       </button>
                     </div>
                   </div>
