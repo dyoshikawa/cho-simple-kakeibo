@@ -11,6 +11,7 @@ import '@fortawesome/fontawesome-free-brands'
 import Header from './components/Header'
 import AddItem from './components/AddItem'
 import ItemList from './components/ItemList'
+import RegisterBudget from './components/RegisterBudget'
 import { Collections } from './utils/defines'
 
 enum Tabs {
@@ -204,7 +205,9 @@ class App extends React.Component<Props, State> {
             )}
             {this.state.tab === Tabs.Budget && (
               <React.Fragment>
-                <div className="container" />
+                <div className="container">
+                  <RegisterBudget me={this.state.me} />
+                </div>
                 <div className="container">
                   <Chartjs.Bar data={data} options={options} />
                 </div>

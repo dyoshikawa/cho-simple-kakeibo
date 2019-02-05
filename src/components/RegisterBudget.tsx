@@ -24,10 +24,9 @@ class RegisterBudget extends React.Component<Props, State> {
     if (!this.props.me || this.state.budget === 0) return
     await firestore()
       .collection(Collections.users)
-      .add({
-        uid: this.props.me.uid,
+      .doc(this.props.me.uid)
+      .set({
         budget: this.state.budget,
-        createdAt: moment().format('YYYY/MM/DD HH:mm:ss'),
       })
     this.setState({ budget: 0 })
     if (this.budgetInputRef.current) this.budgetInputRef.current.value = ''
