@@ -7,34 +7,34 @@ interface Props {
   me: User | null
 }
 interface State {
-  price: number
+  budget: number
 }
 
-class AddItem extends React.Component<Props, State> {
+class RegisterBudget extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      price: 0,
+      budget: 0,
     }
   }
 
-  priceInputRef = React.createRef<HTMLInputElement>()
+  budgetInputRef = React.createRef<HTMLInputElement>()
 
-  onAddItemClicked = async () => {
-    if (!this.props.me || this.state.price === 0) return
+  onRegisterBudgetClicked = async () => {
+    if (!this.props.me || this.state.budget === 0) return
     await firestore()
-      .collection(Collections.items)
+      .collection(Collections.users)
       .add({
-        price: this.state.price,
-        userUid: this.props.me.uid,
+        uid: this.props.me.uid,
+        budget: this.state.budget,
         createdAt: moment().format('YYYY/MM/DD HH:mm:ss'),
       })
-    this.setState({ price: 0 })
-    if (this.priceInputRef.current) this.priceInputRef.current.value = ''
+    this.setState({ budget: 0 })
+    if (this.budgetInputRef.current) this.budgetInputRef.current.value = ''
   }
 
-  onPriceChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ price: Number(e.target.value) })
+  onbudgetChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ budget: Number(e.target.value) })
   }
 
   render() {
@@ -46,15 +46,15 @@ class AddItem extends React.Component<Props, State> {
               <input
                 type="number"
                 className="input"
-                placeholder="支出金額"
-                ref={this.priceInputRef}
-                onChange={this.onPriceChanged}
+                placeholder="予算金額"
+                ref={this.budgetInputRef}
+                onChange={this.onbudgetChanged}
               />
             </p>
             <p className="control">
               <button
                 className="button is-info"
-                onClick={this.onAddItemClicked}
+                onClick={this.onRegisterBudgetClicked}
               >
                 登録
               </button>
@@ -65,4 +65,4 @@ class AddItem extends React.Component<Props, State> {
     )
   }
 }
-export default AddItem
+export default RegisterBudget

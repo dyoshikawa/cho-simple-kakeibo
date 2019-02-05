@@ -2,6 +2,7 @@ import * as React from 'react'
 import { initializeApp, auth, firestore, User } from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
+import * as Chartjs from 'react-chartjs-2'
 import 'bulma'
 import '@fortawesome/fontawesome'
 import '@fortawesome/fontawesome-free-solid'
@@ -91,6 +92,22 @@ class App extends React.Component<Props, State> {
           if (a.createdAt < b.createdAt) return 1
           return 0
         })
+      })
+    firestore()
+      .collection(Collections.items)
+      .where('userUid', '==', me.uid)
+      .onSnapshot(snapShot => {
+        const items: Item[] = snapShot.docs.map(doc => ({
+          id: doc.id,
+          price: doc.data().price as number,
+          userUid: doc.data().userUid as string,
+          createdAt: doc.data().createdAt as string,
+        }))
+        items.sort((a, b) => {
+          if (a.createdAt > b.createdAt) return -1
+          if (a.createdAt < b.createdAt) return 1
+          return 0
+        })
         this.setState({ items: items })
       })
   }
@@ -121,6 +138,33 @@ class App extends React.Component<Props, State> {
   }
 
   render() {
+    const total = this.state.items.reduce((p, item) => p + item.price, 0)
+    const data = {
+      labels: ['予算', '支出'],
+      datasets: [
+        {
+          label: '予算',
+          data: [12, total],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+          ],
+          borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)'],
+          borderWidth: 1,
+        },
+      ],
+    }
+    const options = {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    }
     return (
       <React.Fragment>
         <Header
@@ -131,14 +175,13 @@ class App extends React.Component<Props, State> {
 
         {this.state.me && (
           <React.Fragment>
-            <AddItem me={this.state.me} />
             <div className="container">
               <div className="tabs">
                 <ul>
                   <li
                     className={this.state.tab === Tabs.Items ? 'is-active' : ''}
                   >
-                    <a onClick={this.onItemsTabClicked}>支出一覧</a>
+                    <a onClick={this.onItemsTabClicked}>支出</a>
                   </li>
                   <li
                     className={
@@ -150,10 +193,23 @@ class App extends React.Component<Props, State> {
                 </ul>
               </div>
             </div>
-            <ItemList
-              items={this.state.items}
-              onRemoveItemClicked={this.onRemoveItemClicked}
-            />
+            {this.state.tab === Tabs.Items && (
+              <React.Fragment>
+                <AddItem me={this.state.me} />
+                <ItemList
+                  items={this.state.items}
+                  onRemoveItemClicked={this.onRemoveItemClicked}
+                />
+              </React.Fragment>
+            )}
+            {this.state.tab === Tabs.Budget && (
+              <React.Fragment>
+                <div className="container" />
+                <div className="container">
+                  <Chartjs.Bar data={data} options={options} />
+                </div>
+              </React.Fragment>
+            )}
           </React.Fragment>
         )}
       </React.Fragment>
