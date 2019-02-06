@@ -33,6 +33,7 @@ interface State {
   me: User | null
   items: Item[]
   tab: Tabs
+  budget: number
 }
 
 const firebaseInit = () => {
@@ -68,6 +69,7 @@ class App extends React.Component<Props, State> {
       price: 0,
       items: [],
       tab: Tabs.Items,
+      budget: 0,
     }
   }
 
@@ -79,20 +81,12 @@ class App extends React.Component<Props, State> {
 
     if (!me) return
     firestore()
-      .collection(Collections.items)
-      .where('userUid', '==', me.uid)
+      .collection(Collections.users)
+      .doc(me.uid)
       .onSnapshot(snapShot => {
-        const items: Item[] = snapShot.docs.map(doc => ({
-          id: doc.id,
-          price: doc.data().price as number,
-          userUid: doc.data().userUid as string,
-          createdAt: doc.data().createdAt as string,
-        }))
-        items.sort((a, b) => {
-          if (a.createdAt > b.createdAt) return -1
-          if (a.createdAt < b.createdAt) return 1
-          return 0
-        })
+        if (snapShot == null) return
+        const user: { budget: number } = snapShot.data() as any
+        this.setState({ budget: user.budget as number })
       })
     firestore()
       .collection(Collections.items)
@@ -145,7 +139,7 @@ class App extends React.Component<Props, State> {
       datasets: [
         {
           label: '予算',
-          data: [12, total],
+          data: [this.state.budget, total],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',

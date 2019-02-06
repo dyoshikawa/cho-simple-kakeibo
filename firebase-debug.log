@@ -1,0 +1,20 @@
+[debug] [2019-02-06T04:28:15.650Z] ----------------------------------------------------------------------
+[debug] [2019-02-06T04:28:15.652Z] Command:       /home/dyoshikawa/.anyenv/envs/ndenv/versions/11.3/bin/node /home/dyoshikawa/src/github.com/dyoshikawa/cho-simple-kakeibo/node_modules/.bin/firebase deploy
+[debug] [2019-02-06T04:28:15.652Z] CLI Version:   6.3.1
+[debug] [2019-02-06T04:28:15.652Z] Platform:      linux
+[debug] [2019-02-06T04:28:15.652Z] Node Version:  v11.3.0
+[debug] [2019-02-06T04:28:15.652Z] Time:          Wed Feb 06 2019 13:28:15 GMT+0900 (Japan Standard Time)
+[debug] [2019-02-06T04:28:15.652Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-06T04:28:15.659Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-06T04:28:15.659Z] > authorizing via signed-in user
+[debug] [2019-02-06T04:28:15.659Z] [iam] checking project cho-simple-kakiebo for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-02-06T04:28:15.660Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-02-06T04:28:15.660Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-02-06T04:28:15.882Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-06T04:28:15.893Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/cho-simple-kakiebo:testIamPermissions  
+
+[debug] [2019-02-06T04:28:16.759Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-06T04:28:16.762Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/cho-simple-kakiebo  
+ 
